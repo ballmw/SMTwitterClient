@@ -48,7 +48,12 @@ class TwitterModel{
                     
                     request.performRequestWithHandler({ (data:NSData!, response:NSHTTPURLResponse!, error:NSError!) -> Void in
                         var json = NSString(data:data, encoding:NSUTF8StringEncoding);
-                        NSLog(json);
+                        //NSLog(json);
+                        var jsonResults: NSArray = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSArray
+                        for  jsonResult in jsonResults
+                        {
+                            self.entries.append(TwitterEntry(entry:jsonResult as NSDictionary));
+                        }
                         closure()
                     })
                 }

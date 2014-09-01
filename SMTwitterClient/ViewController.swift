@@ -47,7 +47,7 @@ class ViewController: UITableViewController {
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath: NSIndexPath){
-        cell.textLabel.text="configureCell";
+        cell.textLabel.text = self.twitterModel.entries[atIndexPath.row].detail;
     }
 }
 

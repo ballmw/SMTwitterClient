@@ -16,5 +16,15 @@ class TwitterEntry {
     var detail : NSString = ""
     var iconImageUrl: NSString = ""
     
-    init(){}
+    init(entry:NSDictionary){
+        self.twitterEntryID = entry["id_str"] as NSString
+        var user = entry["user"] as NSDictionary
+        self.username = user["name"] as NSString
+        self.detail = entry["text"] as NSString
+        self.iconImageUrl = user["profile_image_url"] as NSString
+    }
+    
+    func retrieveImage(){
+    
+    }
 }
