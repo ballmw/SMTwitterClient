@@ -37,17 +37,30 @@ class ViewController: UITableViewController {
         return twitterModel.size();
     }
     
+    override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return 100.0;
+    }
+    
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell;
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as TweetCell;
         
         configureCell(cell, atIndexPath: indexPath);
 
         return cell;
     }
     
-    func configureCell(cell: UITableViewCell, atIndexPath: NSIndexPath){
-        cell.textLabel.text = self.twitterModel.entries[atIndexPath.row].detail;
+    func configureCell(cell: TweetCell, atIndexPath: NSIndexPath){
+        cell.usernameLabel.text = self.twitterModel.entries[atIndexPath.row].username;
+        cell.detailLabel.text = self.twitterModel.entries[atIndexPath.row].detail;
+        
+        var width = self.tableView.frame.size.width
+        cell.usernameLabel.frame = CGRectMake(0,0, width, 0)
+        cell.detailLabel.frame = CGRectMake(0,0, width, 0)
+        
+        cell.textLabel.sizeToFit()
+        cell.detailLabel.sizeToFit();
+        cell.sizeToFit();
     }
 }
 
