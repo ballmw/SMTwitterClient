@@ -17,11 +17,11 @@ class TwitterModel{
     
     var entries : [TwitterEntry] = []
     var accountStore : ACAccountStore
-    var params = ["count": "100"]
+    let params = ["count": "100"]
     
     init(){
         accountStore =  ACAccountStore()
-        url = NSURL.URLWithString("https://api.twitter.com/1.1/statuses/home_timeline.json")
+        url = NSURL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json")
 
     }
     
@@ -49,10 +49,10 @@ class TwitterModel{
                     request.performRequestWithHandler({ (data:NSData!, response:NSHTTPURLResponse!, error:NSError!) -> Void in
                         var json = NSString(data:data, encoding:NSUTF8StringEncoding);
                         //NSLog(json);
-                        var jsonResults: NSArray = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSArray
-                        for  jsonResult in jsonResults
+                        var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as [NSDictionary]
+                        for jsonResult in jsonResults
                         {
-                            self.entries.append(TwitterEntry(entry:jsonResult as NSDictionary));
+                            self.entries.append(TwitterEntry(entry:jsonResult));
                         }
                         closure()
                     })

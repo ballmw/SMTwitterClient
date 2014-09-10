@@ -24,7 +24,28 @@ class TwitterEntry {
         self.iconImageUrl = user["profile_image_url"] as NSString
     }
     
-    func retrieveImage(){
-    
+    func loadImage(closure: (UIImage) -> ()) {
+        let url = NSURL(string: self.iconImageUrl)
+        
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        let session = NSURLSession(configuration:config)
+        
+        func onComplete( data:NSData!,  response:NSURLResponse!, error:NSError!) {
+            if (response.isKindOfClass(NSHTTPURLResponse))
+            {
+                let httpResponse = response as NSHTTPURLResponse;
+                
+                if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299)
+                {
+                    let image = UIImage(data:data);
+                    closure(image);
+                }
+            }
+        };
+        
+        let task = session.dataTaskWithURL(url, completionHandler:onComplete);
+        
+        task.resume();
     }
 }

@@ -10,12 +10,12 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    var twitterModel = TwitterModel();
+    let twitterModel = TwitterModel();
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        twitterModel.loadFeed() {
+        twitterModel.loadFeed {
             dispatch_async(dispatch_get_main_queue()){
                 self.tableView.reloadData()
             }
@@ -29,19 +29,19 @@ class ViewController: UITableViewController {
 
 
 
-    override func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return twitterModel.size();
     }
     
-    override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 100.0;
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 150.0;
     }
     
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as TweetCell;
         
@@ -58,8 +58,23 @@ class ViewController: UITableViewController {
         cell.usernameLabel.frame = CGRectMake(0,0, width, 0)
         cell.detailLabel.frame = CGRectMake(0,0, width, 0)
         
-        cell.textLabel.sizeToFit()
+        //cell.textLabel.sizeToFit()
         cell.detailLabel.sizeToFit();
+        
+        cell.iconImage.image = UIImage(named:"Placeholder.png")
+
+        self.twitterModel.entries[atIndexPath.row].loadImage{ (image: UIImage) in
+            
+                dispatch_async(dispatch_get_main_queue()){
+                cell.iconImage.alpha = 0;
+                cell.iconImage.image = image;
+                UIView.animateWithDuration(1.0, animations:{
+                    cell.iconImage.alpha = 1;
+                });
+                
+                }
+        };
+        
         cell.sizeToFit();
     }
 }
