@@ -21,61 +21,60 @@ class ViewController: UITableViewController {
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
-
+    
+    
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return twitterModel.size();
+        return twitterModel.size()
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 150.0;
+        return 150.0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as TweetCell;
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as TweetCell
         
-        configureCell(cell, atIndexPath: indexPath);
-
-        return cell;
+        configureCell(cell, atIndexPath: indexPath)
+        
+        return cell
     }
     
     func configureCell(cell: TweetCell, atIndexPath: NSIndexPath){
-        cell.usernameLabel.text = self.twitterModel.entries[atIndexPath.row].username;
-        cell.detailLabel.text = self.twitterModel.entries[atIndexPath.row].detail;
+        cell.usernameLabel.text = self.twitterModel.entries[atIndexPath.row].username
+        cell.detailLabel.text = self.twitterModel.entries[atIndexPath.row].detail
         
         var width = self.tableView.frame.size.width
         cell.usernameLabel.frame = CGRectMake(0,0, width, 0)
         cell.detailLabel.frame = CGRectMake(0,0, width, 0)
         
-        //cell.textLabel.sizeToFit()
-        cell.detailLabel.sizeToFit();
+        cell.detailLabel.sizeToFit()
         
         cell.iconImage.image = UIImage(named:"Placeholder.png")
-
+        
         self.twitterModel.entries[atIndexPath.row].loadImage{ (image: UIImage) in
             
-                dispatch_async(dispatch_get_main_queue()){
-                cell.iconImage.alpha = 0;
-                cell.iconImage.image = image;
+            dispatch_async(dispatch_get_main_queue()){
+                cell.iconImage.alpha = 0
+                cell.iconImage.image = image
                 UIView.animateWithDuration(1.0, animations:{
-                    cell.iconImage.alpha = 1;
-                });
+                    cell.iconImage.alpha = 1
+                })
                 
-                }
-        };
+            }
+        }
         
-        cell.sizeToFit();
+        cell.sizeToFit()
     }
 }
 

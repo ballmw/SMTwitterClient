@@ -38,8 +38,8 @@ class TwitterEntry {
                 
                 if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299)
                 {
-                    let image = UIImage(data:data);
-                    closure(image);
+                    let image = UIImage(data:data)
+                    closure(image)
                 }
             }
         };

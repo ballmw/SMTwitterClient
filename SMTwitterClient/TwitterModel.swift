@@ -27,7 +27,7 @@ class TwitterModel{
     
     func userHasAccessToTwitter() -> Bool
     {
-        return SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter);
+        return SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)
     }
 
     
@@ -47,12 +47,11 @@ class TwitterModel{
                     request.account = twitterAccounts[0] as ACAccount
                     
                     request.performRequestWithHandler({ (data:NSData!, response:NSHTTPURLResponse!, error:NSError!) -> Void in
-                        var json = NSString(data:data, encoding:NSUTF8StringEncoding);
-                        //NSLog(json);
+                        var json = NSString(data:data, encoding:NSUTF8StringEncoding)
                         var jsonResults = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as [NSDictionary]
                         for jsonResult in jsonResults
                         {
-                            self.entries.append(TwitterEntry(entry:jsonResult));
+                            self.entries.append(TwitterEntry(entry:jsonResult))
                         }
                         closure()
                     })
@@ -61,17 +60,17 @@ class TwitterModel{
                     // Access was not granted, or an error occurred
                     NSLog(error.localizedDescription);
                 }
-        };
+        }
             
-            accountStore.requestAccessToAccountsWithType(twitterAccountType, options:nil, completion: onComplete);
+            accountStore.requestAccessToAccountsWithType(twitterAccountType, options:nil, completion: onComplete)
         } else {
-            NSLog("User is not signed into Twitter");
+            NSLog("User is not signed into Twitter")
         }
 
     }
     
     func size() -> Int{
-        return entries.count;
+        return entries.count
     }
     
 }
