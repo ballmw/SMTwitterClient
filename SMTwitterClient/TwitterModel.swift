@@ -72,7 +72,7 @@ class TwitterModel{
     func size() -> Int{
         return entries.count
     }
-    
+
 }
 
     

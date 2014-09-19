@@ -48,7 +48,23 @@
                             <outlet property="delegate" destination="Ofd-e7-KcS" id="k2K-SQ-cFR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="SM Twitter" id="b3O-0P-70o"/>
+                    <navigationItem key="navigationItem" title="SM Twitter" id="b3O-0P-70o">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="ekS-mD-xEo">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Uxc-0u-PQa">
+                                <rect key="frame" x="-23" y="-15" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Post">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doPost:" destination="Ofd-e7-KcS" eventType="touchUpInside" id="fqi-iK-yEw"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="postButton" destination="Uxc-0u-PQa" id="P1E-Hc-jb1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CNX-R3-DxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

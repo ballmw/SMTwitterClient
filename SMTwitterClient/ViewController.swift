@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Social
 
 class ViewController: UITableViewController {
     
-    let twitterModel = TwitterModel();
+    let twitterModel = TwitterModel()
+    
+    @IBOutlet var postButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +23,22 @@ class ViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refersh")
+        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+    }
+    
+    func refresh(sender:AnyObject){
+        NSLog("refreshing");
+        twitterModel.loadFeed {
+            dispatch_async(dispatch_get_main_queue()){
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+            }
+        }
+
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,5 +95,30 @@ class ViewController: UITableViewController {
         
         cell.sizeToFit()
     }
+    
+    @IBAction func doPost(sender: AnyObject) {
+        if(SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)){
+            let composer = SLComposeViewController(forServiceType:SLServiceTypeTwitter)
+            
+            func completionHandler(result:SLComposeViewControllerResult) {
+                switch (result) {
+                case SLComposeViewControllerResult.Cancelled:
+                    NSLog("Post Canceled");
+                    break;
+                case SLComposeViewControllerResult.Done:
+                    NSLog("Post Sucessful");
+                    break;
+                default:
+                    break;
+                }
+            }
+            
+            composer.completionHandler = completionHandler
+            
+            self.presentViewController(composer, animated: true, completion: { () -> Void in } )
+            
+        }
+    }
+
 }
 
