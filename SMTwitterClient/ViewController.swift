@@ -24,13 +24,13 @@ class ViewController: UITableViewController {
             }
         }
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refersh")
-        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refersh")
+        self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
         
     }
     
     func refresh(sender:AnyObject){
-        NSLog("refreshing");
+        println("refreshing");
         twitterModel.loadFeed {
             dispatch_async(dispatch_get_main_queue()){
                 self.tableView.reloadData()
@@ -102,10 +102,10 @@ class ViewController: UITableViewController {
             
             func completionHandler(result:SLComposeViewControllerResult) {
                 switch (result) {
-                case SLComposeViewControllerResult.Cancelled:
+                case .Cancelled:
                     NSLog("Post Canceled");
                     break;
-                case SLComposeViewControllerResult.Done:
+                case .Done:
                     NSLog("Post Sucessful");
                     break;
                 default:
@@ -115,7 +115,7 @@ class ViewController: UITableViewController {
             
             composer.completionHandler = completionHandler
             
-            self.presentViewController(composer, animated: true, completion: { () -> Void in } )
+            self.presentViewController(composer, animated: true, completion: nil )
             
         }
     }
